@@ -79,7 +79,7 @@ docker run --net=kafka_cluster-lan --rm confluentinc/cp-kafka:latest bash -c "se
 Topic Consume Simple Messages from the --from-beginning
 ----
 ```
-docker run --net=kafka_cluster-lan --rm confluentinc/cp-kafka:latest kafka-console-consumer --bootstrap-server kafka-1:16666 --topic DEMO_TOPIC --new-consumer --from-beginning --max-messages 42 --property parse.key=true --property key.separator=":"
+docker run --net=kafka_cluster-lan --rm confluentinc/cp-kafka:latest kafka-console-consumer --bootstrap-server kafka-1:16666 --topic DEMO_TOPIC --from-beginning --max-messages 42 --property parse.key=true --property key.separator=":"
 ```
 
 
