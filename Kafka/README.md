@@ -35,14 +35,14 @@ docker run --net=kafka_cluster-lan --rm confluentinc/cp-kafka:latest kafka-topic
 Topics List
 ----
 ```
-docker run --net=kafka_cluster-lan --rm confluentinc/cp-kafka:latest kafka-topics --list --zookeeper localhost:15555
+docker run --net=kafka_cluster-lan --rm confluentinc/cp-kafka:latest kafka-topics --list --zookeeper zookeeper-1:15555
 ```
 
 
 Create Topic
 ----
 ```
-docker run --net=kafka_cluster-lan --rm confluentinc/cp-kafka:latest kafka-topics --create --topic DEMO_TOPIC --partitions 11 --replication-factor 3 --if-not-exists --zookeeper localhost:15555
+docker run --net=kafka_cluster-lan --rm confluentinc/cp-kafka:latest kafka-topics --create --topic DEMO_TOPIC --partitions 11 --replication-factor 3 --if-not-exists --zookeeper zookeeper-1:15555
 ```
 
 
@@ -86,21 +86,21 @@ docker run --net=kafka_cluster-lan --rm confluentinc/cp-kafka:latest kafka-conso
 Topic Consume with a ConsumerGroup
 ----
 ```
-docker run --net=kafka_cluster-lan --rm confluentinc/cp-kafka:latest kafka-console-consumer --bootstrap-server localhost:26666 --topic DEMO_TOPIC --group DEMO_TOPIC_GROUP --from-beginning --max-messages 42 --property parse.key=true --property key.separator=":"
+docker run --net=kafka_cluster-lan --rm confluentinc/cp-kafka:latest kafka-console-consumer --bootstrap-server localhost:16666 --topic DEMO_TOPIC --group DEMO_TOPIC_GROUP --from-beginning --max-messages 42 --property parse.key=true --property key.separator=":"
 ```
 
 
 Groups List
 ----
 ```
-docker run --net=kafka_cluster-lan --rm confluentinc/cp-kafka:latest kafka-consumer-groups --list --bootstrap-server localhost:26666
+docker run --net=kafka_cluster-lan --rm confluentinc/cp-kafka:latest kafka-consumer-groups --list --bootstrap-server kafka-1:16666
 ```
 
 
 Groups Describe All
 ----
 ```
-docker run --net=kafka_cluster-lan --rm confluentinc/cp-kafka:latest kafka-consumer-groups --bootstrap-server localhost:26666 --describe --all-groups
+docker run --net=kafka_cluster-lan --rm confluentinc/cp-kafka:latest kafka-consumer-groups --bootstrap-server kafka-1:16666 --describe --all-groups
 ```
 
 
