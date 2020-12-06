@@ -17,6 +17,14 @@ docker rmi $(docker images -a -q)
 ```
 
 
+Docker bash
+----
+```
+docker run -it --network=host --rm confluentinc/cp-kafka:latest bash
+```
+
+
+
 Check Version
 ----
 ```
