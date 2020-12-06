@@ -1,4 +1,10 @@
 version: "3.8"
+
+networks:
+  cluster-lan:
+    driver: bridge
+
+
 services:
     zookeeper-1:
         image: confluentinc/cp-zookeeper:latest
@@ -12,6 +18,8 @@ services:
             ZOOKEEPER_SERVERS: zookeeper-1:15556:15557;zookeeper-2:25556:25557;zookeeper-3:35556:35557
         ports:
             - 15555:15555
+        networks:
+            - cluster-lan
 
     zookeeper-2:
         image: confluentinc/cp-zookeeper:latest
@@ -25,6 +33,8 @@ services:
             ZOOKEEPER_SERVERS: zookeeper-1:15556:15557;zookeeper-2:25556:25557;zookeeper-3:35556:35557
         ports:
             - 25555:25555
+        networks:
+            - cluster-lan
 
     zookeeper-3:
         image: confluentinc/cp-zookeeper:latest
@@ -38,6 +48,8 @@ services:
             ZOOKEEPER_SERVERS: zookeeper-1:15556:15557;zookeeper-2:25556:25557;zookeeper-3:35556:35557
         ports:
             - 35555:35555
+        networks:
+            - cluster-lan
 
     kafka-1:
         image: confluentinc/cp-kafka:latest
@@ -51,6 +63,8 @@ services:
           KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:16666
         ports:
             - 16666:16666
+        networks:
+            - cluster-lan
 
     kafka-2:
         image: confluentinc/cp-kafka:latest
@@ -64,6 +78,8 @@ services:
           KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-2:26666
         ports:
             - 26666:26666
+        networks:
+            - cluster-lan
 
     kafka-3:
         image: confluentinc/cp-kafka:latest
@@ -77,3 +93,5 @@ services:
           KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-3:36666
         ports:
             - 36666:36666
+        networks:
+            - cluster-lan
