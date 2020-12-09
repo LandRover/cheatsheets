@@ -82,7 +82,9 @@ Topics List
 ```
 docker run --net=kafka_cluster-lan --rm confluentinc/cp-kafka:latest kafka-topics --list --zookeeper zookeeper-1:15555
 ```
-
+```
+DEMO_TOPIC
+```
 
 Create Topic
 ----
