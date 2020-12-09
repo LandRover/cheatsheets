@@ -230,3 +230,18 @@ DEMO_TOPIC_GROUP DEMO_TOPIC      4          0               0               0   
 DEMO_TOPIC_GROUP DEMO_TOPIC      0          0               0               0               -               -               -
 ```
 
+
+Zookeeper Shell
+----
+```
+docker run --net=kafka_cluster-lan --rm confluentinc/cp-kafka:latest zookeeper-shell zookeeper-1:15555 ls /
+```
+```
+Connecting to zookeeper-1:15555
+
+WATCHER::
+
+WatchedEvent state:SyncConnected type:None path:null
+[admin, brokers, cluster, config, consumers, controller, controller_epoch, isr_change_notification, latest_producer_id_block, log_dir_event_notification, zookeeper]
+```
+
