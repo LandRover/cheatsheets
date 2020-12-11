@@ -1,0 +1,98 @@
+version: "3.8"
+
+networks:
+  cluster-lan:
+    driver: bridge
+
+services:
+  redis-1:
+    build:
+      context: redis-docker
+    ports:
+      - "7000:7000"
+      - "17000:17000"
+    restart: always
+    entrypoint: [redis-server, /etc/redis/rediscluster.conf,    --port,"7000", --cluster-announce-ip,"${ip}"]
+    networks:
+      - cluster-lan
+
+  redis-2:
+    build:
+      context: redis-docker
+    ports:
+      - "7001:7001"
+      - "17001:17001"
+    restart: always
+    entrypoint: [redis-server, /etc/redis/rediscluster.conf,    --port,"7001",--cluster-announce-ip,"${ip}"]
+    networks:
+      - cluster-lan
+
+  redis-3:
+    build:
+      context: redis-docker
+    ports:
+      - "7002:7002"
+      - "17002:17002"
+    restart: always
+    entrypoint: [redis-server, /etc/redis/rediscluster.conf,    --port,"7002",--cluster-announce-ip,"${ip}"]
+    networks:
+      - cluster-lan
+
+  redis-4:
+    build:
+      context: redis-docker
+    ports:
+      - "7003:7003"
+      - "17003:17003"
+    restart: always
+    entrypoint: [redis-server, /etc/redis/rediscluster.conf,    --port,"7003",--cluster-announce-ip,"${ip}"]
+    networks:
+      - cluster-lan
+    depends_on:
+      - redis-1
+      - redis-2
+      - redis-3
+
+
+  redis-5:
+    build:
+      context: redis-docker
+    ports:
+      - "7004:7004"
+      - "17004:17004"
+    restart: always
+    entrypoint: [redis-server, /etc/redis/rediscluster.conf,    --port,"7004",--cluster-announce-ip,"${ip}"]
+    networks:
+      - cluster-lan
+    depends_on:
+      - redis-1
+      - redis-2
+      - redis-3
+
+  redis-6:
+    build:
+      context: redis-docker
+    ports:
+      - "7005:7005"
+      - "17005:17005"
+    restart: always
+    entrypoint: [redis-server, /etc/redis/rediscluster.conf,    --port,"7005",--cluster-announce-ip,"${ip}"]
+    networks:
+      - cluster-lan
+    depends_on:
+      - redis-1
+      - redis-2
+      - redis-3
+
+  redis-cluster-creator:
+    image: redis:6.0.9
+    entrypoint: [/bin/sh,-c,'echo "yes" | redis-cli -a pass.123 --cluster create ${ip}:7000 ${ip}:7001 ${ip}:7002 ${ip}:7003 ${ip}:7004 ${ip}:7005 --cluster-replicas 1']
+    networks:
+      - cluster-lan
+    depends_on:
+      - redis-1
+      - redis-2
+      - redis-3
+      - redis-4
+      - redis-5
+      - redis-6
